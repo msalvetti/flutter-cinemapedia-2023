@@ -1,4 +1,5 @@
 import 'package:animate_do/animate_do.dart';
+import 'package:cinemapedia/config/helpers/human_formats.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -146,10 +147,10 @@ class _Slide extends StatelessWidget {
                       style: textStyle.bodyMedium
                           ?.copyWith(color: Colors.yellow.shade800),
                     ),
-                    const SizedBox(width: 3),
+                    const SizedBox(width: 10),
                     const Spacer(),
                     Text(
-                      '${movie.popularity}',
+                      HumanFormats.number(movie.popularity),
                       style: textStyle.bodySmall?.copyWith(color: Colors.grey),
                     ),
                   ],
