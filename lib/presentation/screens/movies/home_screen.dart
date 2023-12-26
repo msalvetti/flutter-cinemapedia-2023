@@ -38,19 +38,59 @@ class _HomeViewState extends ConsumerState<_HomeView> {
     final nowPlayingMovies = ref.watch(nowPlayingMoviesProvider);
     final slideShowMovies = ref.watch(moviesSlideshowProvider);
 
-    return Column(
-      children: [
-        const CustomAppBar(),
-        MoviesSlideshow(movies: slideShowMovies),
-        MovieHorizontalListview(
-          movies: nowPlayingMovies,
-          title: 'En Cartelera',
-          subTitle: 'Lunes 20',
-          loadNextPage: () {
-            print('PADRE: Cargando siguiente pagina');
-            ref.read(nowPlayingMoviesProvider.notifier).loadNextPage();
-          },
+    return CustomScrollView(
+      slivers: [
+        const SliverAppBar(
+          floating: true,
+          flexibleSpace: FlexibleSpaceBar(
+            title: CustomAppBar(),
+          ),
         ),
+        SliverList(
+            delegate: SliverChildBuilderDelegate((context, index) {
+          return Column(
+            children: [
+              MoviesSlideshow(movies: slideShowMovies),
+
+              MovieHorizontalListview(
+                movies: nowPlayingMovies,
+                title: 'En Cartelera',
+                subTitle: 'Lunes 20',
+                loadNextPage: () {
+                  ref.read(nowPlayingMoviesProvider.notifier).loadNextPage();
+                },
+              ),
+
+              // proximamente
+              MovieHorizontalListview(
+                movies: nowPlayingMovies,
+                title: 'Proximamente',
+                subTitle: 'Este mes',
+                loadNextPage: () {
+                  ref.read(nowPlayingMoviesProvider.notifier).loadNextPage();
+                },
+              ),
+
+              // otra
+              MovieHorizontalListview(
+                movies: nowPlayingMovies,
+                title: 'Populares',
+                //subTitle: '--',
+                loadNextPage: () {
+                  ref.read(nowPlayingMoviesProvider.notifier).loadNextPage();
+                },
+              ),
+              MovieHorizontalListview(
+                movies: nowPlayingMovies,
+                title: 'Clasicas',
+                //subTitle: '--',
+                loadNextPage: () {
+                  ref.read(nowPlayingMoviesProvider.notifier).loadNextPage();
+                },
+              )
+            ],
+          );
+        }, childCount: 1)),
       ],
     );
   }
