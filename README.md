@@ -6,6 +6,6 @@
 2. Cambiar las variables de entorno (The MovieDB)
 
 Este es el proyecto sandbox entre diciembre 2023 y enero 2024.-
-Status: final de la seccion 12 - mostrar peliculas en pantalla.-
-Fin de diciembre, comenzamos con la seccion 13, el scroll superior en la home.
-clase 200 - obtener peliculas populares
+Status: final de la seccion 13 - mostrar TODAS LAS peliculas en pantalla.-
+Fin de diciembre, comenzamos con la seccion 14,goRouter, Argumentos entre pantallas, multiples datasources.
+clase 206 - fin seccion 13, home page de peliculas estable.
