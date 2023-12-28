@@ -15,5 +15,7 @@ abstract class MoviesDatasource {
   Future<List<Movie>> getUpcoming({ int page = 1 });
   
   //vamos a obtener los detalles de la pelicula
-  Future<Movie> getMovieDetails({ required String movieId });
+  Future<Movie> getMovieById(String id);
+
+  //Future<List<Movie>> searchMovies(String query);
 }

@@ -72,10 +72,10 @@ class MoviedbDatasource extends MoviesDatasource {
   }
   
   @override
-  Future<Movie> getMovieDetails({required String movieId}) async {
-    final response = await dio.get('/movie/$movieId');
+   Future<Movie> getMovieById(String id) async {
+    final response = await dio.get('/movie/$id');
     if (response.statusCode != 200) {
-      throw Exception("Movie with id: $movieId not found");
+      throw Exception("Movie with id: $id not found");
     }
 
     final movieDetails = MovieDetails.fromJson(response.data);
