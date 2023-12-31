@@ -1,6 +1,7 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:cinemapedia/domain/entities/movie.dart';
 import 'package:cinemapedia/presentation/providers/movies/movie_info_provider.dart';
+import 'package:cinemapedia/presentation/providers/providers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -24,6 +25,10 @@ class MovieScreenState extends ConsumerState<MovieScreen> {
     //ahora utilizamos el provider con la referencia al movieInfoProvider
     // y esto realiza la peticion http
     ref.read(movieInfoProvider.notifier).loadMovie(widget.movieId);
+
+    // utilizamos el provider con la referencia al actorsByMovieProvider
+    // y esto realiza la peticion http
+    ref.read(actorsByMovieProvider.notifier).loadActors(widget.movieId);
   }
 
   @override
@@ -70,10 +75,8 @@ class _MovieDetails extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: const EdgeInsets.all(8),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
+            padding: const EdgeInsets.all(8),
+            child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
               // Imagen
               ClipRRect(
                 borderRadius: BorderRadius.circular(20),
@@ -95,27 +98,87 @@ class _MovieDetails extends StatelessWidget {
                   ],
                 ),
               )
-            ]
-          )
-        ),
+            ])),
 
         // Generos de la película
         Padding(
           padding: const EdgeInsets.all(8),
           child: Wrap(
             spacing: 10,
-            children: movie.genreIds.map((genre) => Chip(label: Text(genre))).toList(),
-          ), 
-          
+            children: movie.genreIds
+                .map((genre) => Chip(label: Text(genre)))
+                .toList(),
           ),
+        ),
+        
         // Actores de la pelicula
-        const SizedBox(height: 100),
-
+        _ActorsByMovie(movieId: movie.id.toString()),
         //poner peliculas similares con el endpoint /movie/{movie_id}/similar , trabaja parecido a "Recommendation" pero es distinto.
-        ],
-
+      const SizedBox(height: 20),
+      ],
     );
   }
+}
+
+class _ActorsByMovie extends ConsumerWidget {
+  final String movieId;
+
+  const _ActorsByMovie({required this.movieId});
+
+  @override
+  Widget build(BuildContext context, ref) {
+    final actorsByMovie = ref.watch(actorsByMovieProvider)[movieId];
+  
+    if (actorsByMovie == null) {
+      return const Center(
+        child: CircularProgressIndicator(
+          strokeWidth: 2,
+        ),
+      );
+    } else {
+      print("Actores de la pelicula: $actorsByMovie");
+    }
+
+
+    return SizedBox(
+      height: 300,
+      child: ListView.builder(
+        scrollDirection: Axis.horizontal,
+        itemCount: actorsByMovie.length,
+        itemBuilder: (context, index) {
+          final actor = actorsByMovie[index];
+          return Padding(
+            padding: const EdgeInsets.all(8),
+            child: Column(
+              children: [
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(20),
+                  child: FadeInImage(
+                    placeholder: const AssetImage('assets/images/no-image.jpeg'),
+                    image: NetworkImage(actor.profilePath),
+                    width: 100,
+                    height: 140,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+                const SizedBox(height: 5),
+                SizedBox(
+                  width: 100,
+                  child: Text(
+                    actor.name,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              ],
+            ),
+          );
+        },
+      ),
+    );
+  }
+
 }
 
 class _CustomSliverAppBar extends StatelessWidget {
@@ -132,7 +195,7 @@ class _CustomSliverAppBar extends StatelessWidget {
       expandedHeight: size.height * 0.7,
       foregroundColor: Colors.white,
       flexibleSpace: FlexibleSpaceBar(
-          background: Stack(
+        background: Stack(
           children: [
             SizedBox.expand(
               child: Image.network(
@@ -147,7 +210,10 @@ class _CustomSliverAppBar extends StatelessWidget {
             const _CustomGradient(
                 begin: Alignment.topRight,
                 end: Alignment.bottomLeft,
-                stops: [0.0,0.2],
+                stops: [
+                  0.0,
+                  0.2
+                ],
                 colors: [
                   Colors.black54,
                   Colors.transparent,
