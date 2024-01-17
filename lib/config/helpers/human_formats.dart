@@ -6,10 +6,10 @@ import 'package:intl/intl.dart';
 // y compactar currency. Ejemplo 1000000 -> 1M
 class HumanFormats {
  
-  static String number(double number) {
+  static String number(double number, [int decimalDigits = 0]) {
    
     final NumberFormat formattedNumber = NumberFormat.compactCurrency(
-      decimalDigits: 0,
+      decimalDigits: decimalDigits,
       symbol: '',
       locale: 'en',
     );

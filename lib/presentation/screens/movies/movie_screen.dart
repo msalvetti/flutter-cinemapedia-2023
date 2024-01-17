@@ -127,10 +127,7 @@ class _ActorsByMovie extends ConsumerWidget {
           strokeWidth: 2,
         ),
       );
-    } else {
-      print("Actores de la pelicula: $actorsByMovie");
-    }
-
+    } 
 
     return SizedBox(
       height: 300,
