@@ -23,9 +23,12 @@ class SearchMovieDelegate extends SearchDelegate<Movie?> {
 
   void clearStreams() {
     debouncedMovies.close();
+  //  isLoadingStream.close();
   }
 
   void _onQueryChanged(String query) async {
+    isLoadingStream.add(true);
+    
     if (_debounceTimer?.isActive ?? false) {
       _debounceTimer?.cancel();
     }
@@ -45,18 +48,40 @@ class SearchMovieDelegate extends SearchDelegate<Movie?> {
   //Luego podemos poner un icono de loading.
   @override
   List<Widget>? buildActions(BuildContext context) {
+
+    // creamos un StreamBuilder con el stream de isLoadingStream
+    // y mostramos un SpinPerfect si es broadcast o un FadeIn si no lo es
+    // y en ambos casos un IconButton para limpiar la busqueda
     return [
-      if (query.isNotEmpty)
-        FadeIn(
-          child: IconButton(
-            onPressed: () {
-              query = "";
-            },
-            icon: const Icon(Icons.clear),
-          ),
-        ),
+      StreamBuilder(
+        initialData: false,
+        stream: isLoadingStream.stream,
+        builder: (context, snapshot) {
+          final isLoading = snapshot.data ?? false;
+          return isLoading
+              ? SpinPerfect(
+                  duration: const Duration(seconds: 20),
+                  spins: 10,
+                  infinite: true,
+                  child: IconButton(
+                    onPressed: () {
+                      query = "";
+                    },
+                    icon: const Icon(Icons.refresh),
+                  ),
+                )
+              : FadeIn(
+                  child: IconButton(
+                    onPressed: () {
+                      query = "";
+                    },
+                    icon: const Icon(Icons.clear),
+                  ),
+                );
+        },
+      ),
     ];
-  }
+    }
 
   // buildLeading es lo que necesito para salir de la busqueda
   // y volver a la pantalla anterior, puedo usar el 2do parametro, llamado result
@@ -66,6 +91,7 @@ class SearchMovieDelegate extends SearchDelegate<Movie?> {
     return IconButton(
       onPressed: () {
         clearStreams();
+
         close(context, null);
       },
       icon: const Icon(Icons.arrow_back_ios_new_rounded),
