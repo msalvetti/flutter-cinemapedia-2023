@@ -183,6 +183,7 @@ class _CustomSliverAppBar extends StatelessWidget {
       backgroundColor: Colors.black,
       expandedHeight: size.height * 0.7,
       foregroundColor: Colors.white,
+      
       flexibleSpace: FlexibleSpaceBar(
         background: Stack(
           children: [
@@ -222,8 +223,10 @@ class _CustomSliverAppBar extends StatelessWidget {
       actions: [
         IconButton(
           onPressed: () {
+            //we will manage the toggle event here
             print('favorito');
           },
+          // based on the state, we will change the icon, between favorite_rounded and favorite_border
           icon: const Icon(Icons.favorite_border),
         ),
       ],
