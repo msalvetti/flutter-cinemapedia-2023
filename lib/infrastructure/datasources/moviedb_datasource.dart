@@ -21,7 +21,7 @@ class MoviedbDatasource extends MoviesDatasource {
 
   void checkForCharlesProxy(Dio dio) {
     const charlesIp = '192.168.0.18';
-    print('#CharlesProxyEnabled');
+    print('#CharlesProxyEnabled');syc
     (dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
         (client) {
       client.findProxy = (uri) => "PROXY $charlesIp:8888;";
