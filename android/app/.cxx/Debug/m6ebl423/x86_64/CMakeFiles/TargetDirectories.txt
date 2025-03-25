@@ -1,0 +1,2 @@
+/Users/mariano.salvetti/cinemapedia_2023/flutter-cinemapedia-2023/android/app/.cxx/Debug/m6ebl423/x86_64/CMakeFiles/rebuild_cache.dir
+/Users/mariano.salvetti/cinemapedia_2023/flutter-cinemapedia-2023/android/app/.cxx/Debug/m6ebl423/x86_64/CMakeFiles/edit_cache.dir

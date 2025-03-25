@@ -1,0 +1,20 @@
+{
+  "buildFiles": [
+    "/Users/mariano.salvetti/fvm/versions/3.29.1/packages/flutter_tools/gradle/src/main/groovy/CMakeLists.txt"
+  ],
+  "cleanCommandsComponents": [
+    [
+      "/Users/mariano.salvetti/Library/Android/sdk/cmake/3.22.1/bin/ninja",
+      "-C",
+      "/Users/mariano.salvetti/cinemapedia_2023/flutter-cinemapedia-2023/android/app/.cxx/Debug/442b5h6v/x86",
+      "clean"
+    ]
+  ],
+  "buildTargetsCommandComponents": [
+    "/Users/mariano.salvetti/Library/Android/sdk/cmake/3.22.1/bin/ninja",
+    "-C",
+    "/Users/mariano.salvetti/cinemapedia_2023/flutter-cinemapedia-2023/android/app/.cxx/Debug/442b5h6v/x86",
+    "{LIST_OF_TARGETS_TO_BUILD}"
+  ],
+  "libraries": {}
+}
