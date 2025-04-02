@@ -9,7 +9,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 Future<void> main() async{
 
   await dotenv.load(fileName: '.env');
-  print('--->comenzando la App , con API KEY: ${dotenv.env['THE_MOVIEDB_KEY']}');
+  print('--->comenzando la App en 2025 , con API KEY: ${dotenv.env['THE_MOVIEDB_KEY']}');
   runApp(
     const ProviderScope(child: MainApp() )
   );
